@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Tasks{% endblock %}
+{% block content %}
+
+<form action="{{ url_for('update_task', id=task.systemTaskId)}}" method="post">
+    <table class="table table-striped">
+        <tbody align="center">
+            <tr>
+                <th>Title</th><td><input class="form-control" type="text" name="title" id="title" value="{{ task.title }}"></td>
+            </tr><tr>
+                <th>Description</th><td><textarea class="form-control" name="description" id="description">{{ task.description }}</textarea></td>
+            </tr><tr>
+                <th>Creation Date</th><td>{{ task.creationDate }}</td>
+            </tr><tr>
+                <th>Due Date</th><td><input class="form-control" type="date" name="dueDate" id="dueDate" value="{{ task.dueDate }}"></td>
+            </tr><tr>
+                <th>Status</th><td>
+                    <select name="status" class="form-control" id="status">
+                        <option value=''>--Select Status--</option>
+                        {%  for status in statusList %}
+                            <option value="{{ status }}" {% if task.status== status %} selected="selected"{% endif %}>{{ status }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            {%  if task.todoTaskCommentSet|length > 0 %}
+            <tr>
+                  <td colspan="2">
+                    <table class="table table-bordered" style="text-align:center;">
+                        <caption style="caption-side: top;font-weight:bold;text-align:center;">Task Comments</caption>
+                        <thead>
+                            <tr>
+                                <th>Creation Date</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%  for taskComment in task.todoTaskCommentSet %}
+                                <tr>
+                                    <td>{{ taskComment.creationDate }}</td>
+                                    <td>{{ taskComment.taskComments }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                  </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td colspan="2">
+                  <table class="table table-borderless">
+                    <tr>
+                      <td>                        
+                        <input type="button" class="btn btn-primary" onclick=addNewComments() value="Add New Comments"/>
+                      </td>                     
+                      <td id="commentsTable" style="display: none;">
+                        <textarea class="form-control" name="taskComments" id="taskComments" style="height: 100px;width: 1090px;">{{ taskComments }}</textarea>
+                      </td>                      
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+{% endblock %}

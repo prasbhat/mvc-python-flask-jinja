@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Tasks{% endblock %}
+{% block content %}
+
+<form action="{{url_for('create_task')}}" method="post">
+    <table class="table table-striped">
+        <tbody align="center">
+            <tr>
+                <th>Title</th><td><input type="text" name="title" id="title" class="form-control"></td>
+            </tr><tr>
+                <th>Description</th><td><textarea name="description" id="description" class="form-control"></textarea></td>
+            </tr><tr>
+                <th>Due Date</th><td><input type="date" name="dueDate" id="dueDate" class="form-control"></td>
+            </tr><tr>
+                <th>Status</th><td>
+                    <select name="status" id="status" class="form-control">
+                        <option value=''>--Select Status--</option>
+                        {%  for status in statusList %}
+                            <option value="{{ status }}">{{ status }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr><tr>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}View Task{% endblock %}
+{% block content %}
+    <table class="table table-striped">        
+        <tbody align="center">
+            <tr>
+                <th>Title</th>
+                <td>{{ task.title }}</td>
+            </tr><tr>
+                <th>Description</th>
+                <td>{{ task.description }}</td>
+            </tr><tr>
+                <th>Creation Date</th>
+                <td>{{ task.creationDate }}</td>
+            </tr>
+            </tr><tr>
+                <th>Due Date</th>
+                <td>{{ task.dueDate }}</td>
+            </tr><tr>
+                <th>Status</th>
+                <td>{{ task.status }}</td>
+            </tr>
+            {%  if task.todoTaskCommentSet|length > 0 %}
+            <tr>
+                  <td colspan="2">
+                    <table class="table table-bordered" style="text-align:center;">
+                        <caption style="caption-side: top;font-weight:bold;text-align:center;">Task Comments</caption>
+                        <thead>
+                            <tr>
+                                <th>Creation Date</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%  for taskComment in task.todoTaskCommentSet %}
+                                <tr>
+                                    <td>{{ taskComment.creationDate }}</td>
+                                    <td>{{ taskComment.taskComments }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                  </td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}
